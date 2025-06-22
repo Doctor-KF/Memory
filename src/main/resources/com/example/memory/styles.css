@@ -1,0 +1,217 @@
+/* Dark Theme Memory Game Styles */
+
+/* Main Container */
+.main-container {
+    -fx-background-color: linear-gradient(to bottom, #1a1a2e, #16213e);
+    -fx-background-radius: 0;
+}
+
+/* Title Text */
+.title-text {
+    -fx-fill: linear-gradient(to right, #4facfe, #00f2fe);
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, rgba(79, 172, 254, 0.6), 10, 0, 0, 0);
+}
+
+/* Input Container */
+.input-container {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 15;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+/* Text Field */
+.text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.6);
+    -fx-border-color: #4facfe;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-font-size: 16;
+}
+
+.text-field:focused {
+    -fx-border-color: #00f2fe;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 242, 254, 0.5), 5, 0, 0, 0);
+}
+
+/* Difficulty Buttons */
+.difficulty-btn {
+    -fx-background-color: linear-gradient(to bottom, #4facfe, #00f2fe);
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-padding: 15 25;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0, 0, 2);
+}
+
+.difficulty-btn:hover {
+    -fx-background-color: linear-gradient(to bottom, #00f2fe, #4facfe);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(three-pass-box, rgba(79, 172, 254, 0.6), 10, 0, 0, 0);
+}
+
+.difficulty-btn:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+/* Secondary Buttons */
+.secondary-btn {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-padding: 10 20;
+    -fx-background-radius: 20;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-cursor: hand;
+}
+
+.secondary-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-border-color: #4facfe;
+}
+
+/* Tab Buttons */
+.tab-btn {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-padding: 10 20;
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-cursor: hand;
+}
+
+.tab-btn:hover {
+    -fx-background-color: rgba(79, 172, 254, 0.3);
+    -fx-border-color: #4facfe;
+}
+
+.tab-btn.active {
+    -fx-background-color: linear-gradient(to bottom, #4facfe, #00f2fe);
+    -fx-border-color: transparent;
+}
+
+/* Danger Button */
+.danger-btn {
+    -fx-background-color: linear-gradient(to bottom, #ff4757, #ff3742);
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-padding: 10 20;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0, 0, 2);
+}
+
+.danger-btn:hover {
+    -fx-background-color: linear-gradient(to bottom, #ff3742, #ff4757);
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 71, 87, 0.6), 10, 0, 0, 0);
+}
+
+/* Memory Cards */
+.memory-card {
+    -fx-background-color: linear-gradient(to bottom, #2c3e50, #34495e);
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0, 0, 2);
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-text-fill: transparent;
+}
+
+.memory-card:hover {
+    -fx-background-color: linear-gradient(to bottom, #34495e, #2c3e50);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.memory-card.flipped {
+    -fx-background-color: linear-gradient(to bottom, #4facfe, #00f2fe);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(79, 172, 254, 0.6), 10, 0, 0, 0);
+}
+
+.memory-card.matched {
+    -fx-background-color: linear-gradient(to bottom, #2ed573, #1e90ff);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(46, 213, 115, 0.6), 10, 0, 0, 0);
+}
+
+.memory-card.wrong {
+    -fx-background-color: linear-gradient(to bottom, #ff4757, #ff3742);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 71, 87, 0.6), 10, 0, 0, 0);
+}
+
+/* Table View */
+.table-view {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #4facfe, #00f2fe);
+    -fx-background-radius: 10 10 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+}
+
+.table-view .table-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-padding: 8;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgba(79, 172, 254, 0.3);
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Scroll Bar */
+.scroll-bar {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-background-radius: 10;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgba(79, 172, 254, 0.6);
+    -fx-background-radius: 10;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(79, 172, 254, 0.8);
+}

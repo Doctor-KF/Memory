@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="30.0" styleClass="main-container" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.memory.controller.StartScreenController">
+    <children>
+        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-text" text="Memory Game">
+            <font>
+                <Font name="System Bold" size="48.0" />
+            </font>
+        </Text>
+
+        <VBox alignment="CENTER" spacing="20.0" styleClass="input-container">
+            <children>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Your Name:">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Text>
+                <TextField fx:id="nameField" maxWidth="300.0" promptText="Your name here..." styleClass="text-field" />
+            </children>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="15.0">
+            <children>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Difficulty:">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Text>
+                <HBox alignment="CENTER" spacing="20.0">
+                    <children>
+                        <Button fx:id="easyBtn" mnemonicParsing="false" onAction="#startEasyGame" styleClass="difficulty-btn" text="Easy (4x4)" />
+                        <Button fx:id="mediumBtn" mnemonicParsing="false" onAction="#startMediumGame" styleClass="difficulty-btn" text="Medium (6x6)" />
+                        <Button fx:id="hardBtn" mnemonicParsing="false" onAction="#startHardGame" styleClass="difficulty-btn" text="Hard (8x8)" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+        <Button fx:id="leaderboardBtn" mnemonicParsing="false" onAction="#showLeaderboard" styleClass="secondary-btn" text="🏆 Leaderboard" />
+    </children>
+    <padding>
+        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+    </padding>
+</VBox>
