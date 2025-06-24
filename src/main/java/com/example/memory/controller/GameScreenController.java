@@ -1,5 +1,6 @@
 package com.example.memory.controller;
 
+import com.example.memory.MemoryGameApp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Node;
@@ -311,25 +312,24 @@ public class GameScreenController {
     @FXML
     private void backToMenu() {
         try {
-            // Stop the timer if it's running
             if (timer != null) {
                 timer.stop();
             }
 
-            // Use absolute path from resources root
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/memory/StartScreen.fxml"));
             Scene scene = new Scene(loader.load(), 800, 600);
 
-            // Add CSS if needed
             String cssResource = getClass().getResource("/com/example/memory/styles.css").toExternalForm();
             scene.getStylesheets().add(cssResource);
 
-            // Get current stage and switch to start screen
             Stage stage = (Stage) gameGrid.getScene().getWindow();
+
+            // Set the window icon
+            MemoryGameApp.setWindowIcon(stage);
+
             stage.setScene(scene);
             stage.setTitle("Memory Game - Main Menu");
 
-            // Reset window size to original if it was resized
             if (originalWidth > 0 && originalHeight > 0) {
                 stage.setWidth(originalWidth);
                 stage.setHeight(originalHeight);

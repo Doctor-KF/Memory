@@ -1,5 +1,6 @@
 package com.example.memory.controller;
 
+import com.example.memory.MemoryGameApp;
 import com.example.memory.model.GameResult;
 import com.example.memory.service.LeaderboardManager;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -116,17 +117,14 @@ public class LeaderboardController implements Initializable {
     @FXML
     private void backToMenu() {
         try {
-            // Get the resource URL first to ensure it exists
             URL fxmlResource = getClass().getResource("/com/example/memory/StartScreen.fxml");
             if (fxmlResource == null) {
                 throw new IOException("Could not find StartScreen.fxml resource at /com/example/memory/StartScreen.fxml");
             }
 
-            // Create FXMLLoader with the resource URL
             FXMLLoader loader = new FXMLLoader(fxmlResource);
             Scene scene = new Scene(loader.load(), 800, 600);
 
-            // Add CSS if it exists
             URL cssResource = getClass().getResource("/com/example/memory/styles.css");
             if (cssResource != null) {
                 scene.getStylesheets().add(cssResource.toExternalForm());
@@ -134,8 +132,11 @@ public class LeaderboardController implements Initializable {
                 System.out.println("Warning: Could not find styles.css");
             }
 
-            // Get current stage and switch to start screen
             Stage stage = (Stage) backBtn.getScene().getWindow();
+
+            // Set the window icon
+            MemoryGameApp.setWindowIcon(stage);
+
             stage.setScene(scene);
             stage.setTitle("Memory Game - Main Menu");
             stage.centerOnScreen();

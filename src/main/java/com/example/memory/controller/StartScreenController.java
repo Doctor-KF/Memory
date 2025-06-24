@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import com.example.memory.MemoryGameApp;
 
 public class StartScreenController {
 
@@ -39,17 +40,18 @@ public class StartScreenController {
         }
 
         try {
-            // Use absolute path from resources root
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/memory/GameScreen.fxml"));
             Scene scene = new Scene(loader.load(), 800, 600);
-
-            // Use absolute path for CSS
             scene.getStylesheets().add(getClass().getResource("/com/example/memory/styles.css").toExternalForm());
 
             GameScreenController controller = loader.getController();
             controller.initializeGame(playerName, gridSize);
 
             Stage stage = (Stage) nameField.getScene().getWindow();
+
+            // Set the window icon
+            MemoryGameApp.setWindowIcon(stage);
+
             stage.setScene(scene);
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,14 +62,15 @@ public class StartScreenController {
     @FXML
     private void showLeaderboard() {
         try {
-            // Use absolute path from resources root
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/memory/Leaderboard.fxml"));
             Scene scene = new Scene(loader.load(), 800, 600);
-
-            // Use absolute path for CSS
             scene.getStylesheets().add(getClass().getResource("/com/example/memory/styles.css").toExternalForm());
 
             Stage stage = (Stage) nameField.getScene().getWindow();
+
+            // Set the window icon
+            MemoryGameApp.setWindowIcon(stage);
+
             stage.setScene(scene);
         } catch (Exception e) {
             e.printStackTrace();
