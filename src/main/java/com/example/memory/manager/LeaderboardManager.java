@@ -1,4 +1,4 @@
-package com.example.memory.service;
+package com.example.memory.manager;
 
 import com.example.memory.model.GameResult;
 

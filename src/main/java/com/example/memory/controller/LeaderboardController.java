@@ -2,7 +2,7 @@ package com.example.memory.controller;
 
 import com.example.memory.MemoryGameApp;
 import com.example.memory.model.GameResult;
-import com.example.memory.service.LeaderboardManager;
+import com.example.memory.manager.LeaderboardManager;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
