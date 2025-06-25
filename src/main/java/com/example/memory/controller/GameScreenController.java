@@ -311,6 +311,10 @@ public class GameScreenController {
                 playerName, score, attempts, seconds / 60, seconds % 60, getDifficultyName()
         ));
 
+        if (backBtn != null) {
+            backBtn.setDisable(true);
+        }
+
         alert.setOnHidden(e -> {
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
             pause.setOnFinished(evt -> backToMenu());
@@ -346,13 +350,21 @@ public class GameScreenController {
                 timer.stop();
             }
 
+            Stage stage = null;
+            if (gameGrid != null && gameGrid.getScene() != null && gameGrid.getScene().getWindow() != null) {
+                stage = (Stage) gameGrid.getScene().getWindow();
+            }
+
+            if (stage == null) {
+                javafx.application.Platform.runLater(this::backToMenu);
+                return;
+            }
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/memory/StartScreen.fxml"));
             Scene scene = new Scene(loader.load(), 800, 600);
 
             String cssResource = getClass().getResource("/com/example/memory/styles.css").toExternalForm();
             scene.getStylesheets().add(cssResource);
-
-            Stage stage = (Stage) gameGrid.getScene().getWindow();
 
             MemoryGameApp.setWindowIcon(stage);
 
@@ -394,7 +406,11 @@ public class GameScreenController {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.showAndWait();
+        try {
+            alert.show();
+        } catch (IllegalStateException ex) {
+            javafx.application.Platform.runLater(alert::show);
+        }
     }
 }
 
