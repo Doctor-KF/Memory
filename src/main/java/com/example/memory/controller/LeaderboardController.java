@@ -19,6 +19,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for displaying and managing the leaderboard.
+ */
 public class LeaderboardController implements Initializable {
 
     @FXML private Button easyTabBtn;
@@ -36,12 +39,18 @@ public class LeaderboardController implements Initializable {
 
     private String currentDifficulty = "Easy";
 
+    /**
+     * Initializes the leaderboard when the controller is loaded.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupTable();
         showEasyLeaderboard();
     }
 
+    /**
+     * Configures the table columns for the leaderboard.
+     */
     private void setupTable() {
         rankColumn.setCellValueFactory(cellData ->
                 new SimpleIntegerProperty(cellData.getValue().getRank()).asObject());
@@ -57,6 +66,9 @@ public class LeaderboardController implements Initializable {
                 new SimpleStringProperty(cellData.getValue().getDateFormatted()));
     }
 
+    /**
+     * Shows the leaderboard for the "Easy" difficulty.
+     */
     @FXML
     private void showEasyLeaderboard() {
         updateActiveButton(easyTabBtn);
@@ -64,6 +76,9 @@ public class LeaderboardController implements Initializable {
         loadLeaderboard();
     }
 
+    /**
+     * Shows the leaderboard for the "Medium" difficulty.
+     */
     @FXML
     private void showMediumLeaderboard() {
         updateActiveButton(mediumTabBtn);
@@ -71,6 +86,9 @@ public class LeaderboardController implements Initializable {
         loadLeaderboard();
     }
 
+    /**
+     * Shows the leaderboard for the "Hard" difficulty.
+     */
     @FXML
     private void showHardLeaderboard() {
         updateActiveButton(hardTabBtn);
@@ -78,16 +96,22 @@ public class LeaderboardController implements Initializable {
         loadLeaderboard();
     }
 
+    /**
+     * Highlights the active difficulty button.
+     *
+     * @param activeBtn The active button.
+     */
     private void updateActiveButton(Button activeBtn) {
-        // Remove active class from all buttons
         easyTabBtn.getStyleClass().remove("active");
         mediumTabBtn.getStyleClass().remove("active");
         hardTabBtn.getStyleClass().remove("active");
 
-        // Add active class to the clicked button
         activeBtn.getStyleClass().add("active");
     }
 
+    /**
+     * Loads the leaderboard for the current difficulty.
+     */
     private void loadLeaderboard() {
         List<GameResult> results = LeaderboardManager.getLeaderboard(currentDifficulty);
         ObservableList<GameResultWrapper> wrappedResults = FXCollections.observableArrayList();
@@ -99,6 +123,9 @@ public class LeaderboardController implements Initializable {
         leaderboardTable.setItems(wrappedResults);
     }
 
+    /**
+     * Clears the leaderboard for the current difficulty after confirmation.
+     */
     @FXML
     private void clearLeaderboard() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -114,6 +141,9 @@ public class LeaderboardController implements Initializable {
         });
     }
 
+    /**
+     * Returns to the main menu.
+     */
     @FXML
     private void backToMenu() {
         try {
@@ -134,11 +164,9 @@ public class LeaderboardController implements Initializable {
 
             Stage stage = (Stage) backBtn.getScene().getWindow();
 
-            // Set the window icon
             MemoryGameApp.setWindowIcon(stage);
 
             stage.setScene(scene);
-            stage.setTitle("Memory Game - Main Menu");
             stage.centerOnScreen();
 
         } catch (IOException e) {
@@ -150,7 +178,12 @@ public class LeaderboardController implements Initializable {
         }
     }
 
-    // Helper method to show error alerts
+    /**
+     * Shows an error dialog.
+     *
+     * @param title Title of the dialog.
+     * @param message Error message.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -159,7 +192,9 @@ public class LeaderboardController implements Initializable {
         alert.showAndWait();
     }
 
-    // Wrapper class to add rank to GameResult for TableView
+    /**
+     * Wrapper class for GameResult for displaying in the table.
+     */
     public static class GameResultWrapper {
         private final GameResult gameResult;
         private final int rank;

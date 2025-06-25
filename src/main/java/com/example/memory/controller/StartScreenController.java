@@ -9,6 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import com.example.memory.MemoryGameApp;
 
+/**
+ * Controller for the start screen of the Memory Game.
+ * Handles starting games and showing the leaderboard.
+ */
 public class StartScreenController {
 
     @FXML private TextField nameField;
@@ -17,21 +21,35 @@ public class StartScreenController {
     @FXML private Button hardBtn;
     @FXML private Button leaderboardBtn;
 
+    /**
+     * Starts a game with "Easy" difficulty.
+     */
     @FXML
     private void startEasyGame() {
         startGame(4);
     }
 
+    /**
+     * Starts a game with "Medium" difficulty.
+     */
     @FXML
     private void startMediumGame() {
         startGame(6);
     }
 
+    /**
+     * Starts a game with "Hard" difficulty.
+     */
     @FXML
     private void startHardGame() {
         startGame(8);
     }
 
+    /**
+     * Starts the game with the specified grid size.
+     *
+     * @param gridSize Size of the game grid (e.g., 4, 6, 8).
+     */
     private void startGame(int gridSize) {
         String playerName = nameField.getText().trim();
         if (playerName.isEmpty()) {
@@ -49,7 +67,6 @@ public class StartScreenController {
 
             Stage stage = (Stage) nameField.getScene().getWindow();
 
-            // Set the window icon
             MemoryGameApp.setWindowIcon(stage);
 
             stage.setScene(scene);
@@ -59,6 +76,9 @@ public class StartScreenController {
         }
     }
 
+    /**
+     * Zeigt die Bestenliste an.
+     */
     @FXML
     private void showLeaderboard() {
         try {
@@ -68,7 +88,6 @@ public class StartScreenController {
 
             Stage stage = (Stage) nameField.getScene().getWindow();
 
-            // Set the window icon
             MemoryGameApp.setWindowIcon(stage);
 
             stage.setScene(scene);
@@ -78,6 +97,11 @@ public class StartScreenController {
         }
     }
 
+    /**
+     * Shows a warning message.
+     *
+     * @param message The message to display.
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");

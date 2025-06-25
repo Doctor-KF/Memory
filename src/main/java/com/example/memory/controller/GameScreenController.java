@@ -22,6 +22,10 @@ import javafx.util.Duration;
 
 import java.util.*;
 
+/**
+ * Controller for the game screen of the Memory Game.
+ * Handles game logic, UI updates, and user interactions.
+ */
 public class GameScreenController {
 
     @FXML private Text playerNameText;
@@ -48,6 +52,12 @@ public class GameScreenController {
     private double originalWidth;
     private double originalHeight;
 
+    /**
+     * Initializes the game with the player's name and grid size.
+     *
+     * @param playerName Name of the player.
+     * @param gridSize Size of the game grid (e.g., 4, 6, 8).
+     */
     public void initializeGame(String playerName, int gridSize) {
         this.playerName = playerName;
         this.gridSize = gridSize;
@@ -62,7 +72,6 @@ public class GameScreenController {
         setupGame();
         startTimer();
 
-        // Store original window size before any resizing
         javafx.application.Platform.runLater(() -> {
             if (gameGrid.getScene() != null && gameGrid.getScene().getWindow() != null) {
                 Stage stage = (Stage) gameGrid.getScene().getWindow();
@@ -73,21 +82,22 @@ public class GameScreenController {
         });
     }
 
+    /**
+     * Adjusts the window size based on the grid size.
+     */
     private void resizeWindow() {
-        // Add null check to prevent NullPointerException
         if (gameGrid.getScene() == null || gameGrid.getScene().getWindow() == null) {
             return;
         }
 
         Stage stage = (Stage) gameGrid.getScene().getWindow();
 
-        // Calculate window size based on grid size
         double windowWidth, windowHeight;
 
         switch (gridSize) {
             case 4:
-                // Keep same size as start screen - no resizing needed for easy mode
-                return; // Exit early, don't resize for easy mode
+
+                return;
             case 6:
                 windowWidth = 1000;
                 windowHeight = 750;
@@ -97,7 +107,7 @@ public class GameScreenController {
                 windowHeight = 900;
                 break;
             default:
-                return; // Don't resize for unknown grid sizes
+                return;
         }
 
         stage.setWidth(windowWidth);
@@ -105,11 +115,13 @@ public class GameScreenController {
         stage.centerOnScreen();
     }
 
+    /**
+     * Sets up the game grid and cards.
+     */
     private void setupGame() {
         gameGrid.getChildren().clear();
         cards = new ArrayList<>();
 
-        // Create card symbols (emojis)
         List<String> symbols = Arrays.asList(
                 "🎮", "🎯", "🎲", "🎪", "🎨", "🎭", "🎸", "🎹",
                 "⚽", "🍔", "🎾", "🏐", "🏈", "⚾", "🎳", "🏓",
@@ -117,7 +129,6 @@ public class GameScreenController {
                 "🦄", "🐉", "🦋", "🐛", "🐝", "🐞", "🚒", "🎷"
         );
 
-        // Create pairs of cards
         List<String> gameSymbols = new ArrayList<>();
         for (int i = 0; i < totalPairs; i++) {
             gameSymbols.add(symbols.get(i));
@@ -125,14 +136,12 @@ public class GameScreenController {
         }
         Collections.shuffle(gameSymbols);
 
-        // Create and place cards
         int symbolIndex = 0;
         for (int row = 0; row < gridSize; row++) {
             for (int col = 0; col < gridSize; col++) {
                 MemoryCard card = new MemoryCard(gameSymbols.get(symbolIndex));
                 card.setOnAction(e -> handleCardClick(card));
 
-                // Improved card sizing - larger cards for better visibility
                 double cardSize;
                 switch (gridSize) {
                     case 4:
@@ -158,11 +167,15 @@ public class GameScreenController {
             }
         }
 
-        // Set gap between cards for better visual separation
         gameGrid.setHgap(5);
         gameGrid.setVgap(5);
     }
 
+    /**
+     * Handles a click on a memory card.
+     *
+     * @param card The clicked MemoryCard.
+     */
     private void handleCardClick(MemoryCard card) {
         if (isProcessing || card.isFlipped() || card.isMatched()) {
             return;
@@ -180,23 +193,22 @@ public class GameScreenController {
         }
     }
 
+    /**
+     * Checks if two cards match and updates the game state.
+     */
     private void checkMatch() {
         isProcessing = true;
 
-        // Store references to the cards before they might be nullified
         final MemoryCard card1 = firstCard;
         final MemoryCard card2 = secondCard;
 
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(e -> {
-            // Use the stored references instead of the instance variables
             if (card1.getSymbol().equals(card2.getSymbol())) {
-                // Match found
                 card1.setMatched(true);
                 card2.setMatched(true);
                 matchedPairs++;
 
-                // Calculate score: base points + time bonus - attempt penalty
                 int basePoints = gridSize * 10;
                 int timeBonus = Math.max(0, 300 - seconds);
                 int attemptPenalty = attempts * 2;
@@ -204,13 +216,11 @@ public class GameScreenController {
 
                 checkGameComplete();
             } else {
-                // No match - show wrong briefly
                 card1.showWrong();
                 card2.showWrong();
 
                 PauseTransition wrongPause = new PauseTransition(Duration.seconds(0.5));
                 wrongPause.setOnFinished(evt -> {
-                    // Use stored references here too
                     card1.flip();
                     card2.flip();
                 });
@@ -225,15 +235,16 @@ public class GameScreenController {
         pause.play();
     }
 
+    /**
+     * Checks if the game is complete and shows a completion message if so.
+     */
     private void checkGameComplete() {
         if (matchedPairs == totalPairs) {
             timer.stop();
 
-            // Bonus for completing the game
             int completionBonus = gridSize * 50;
             score += completionBonus;
 
-            // Save to leaderboard
             LeaderboardManager.addScore(new GameResult(
                     playerName, score, attempts, seconds,
                     getDifficultyName(), new Date()
@@ -241,11 +252,15 @@ public class GameScreenController {
 
             updateUI();
 
-            // Show completion message
             showCompletionAlert();
         }
     }
 
+    /**
+     * Returns the difficulty name based on the grid size.
+     *
+     * @return Difficulty name as a String.
+     */
     private String getDifficultyName() {
         switch (gridSize) {
             case 4: return "Easy";
@@ -255,6 +270,9 @@ public class GameScreenController {
         }
     }
 
+    /**
+     * Starts the game timer.
+     */
     private void startTimer() {
         timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             seconds++;
@@ -264,6 +282,9 @@ public class GameScreenController {
         timer.play();
     }
 
+    /**
+     * Updates the UI elements (score, attempts, time).
+     */
     private void updateUI() {
         scoreText.setText("Score: " + score);
         attemptsText.setText("Attempts: " + attempts);
@@ -273,6 +294,9 @@ public class GameScreenController {
         timeText.setText(String.format("Time: %02d:%02d", minutes, secs));
     }
 
+    /**
+     * Shows a completion alert after the game ends.
+     */
     private void showCompletionAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Congratulations!");
@@ -296,12 +320,15 @@ public class GameScreenController {
         alert.show();
     }
 
+    /**
+     * Starts a new game with the current settings.
+     */
     @FXML
     private void newGame() {
         if (timer != null) {
             timer.stop();
         }
-        // Reset card references to prevent null pointer exceptions
+
         firstCard = null;
         secondCard = null;
         isProcessing = false;
@@ -309,6 +336,9 @@ public class GameScreenController {
         initializeGame(playerName, gridSize);
     }
 
+    /**
+     * Returns to the main menu.
+     */
     @FXML
     private void backToMenu() {
         try {
@@ -324,11 +354,9 @@ public class GameScreenController {
 
             Stage stage = (Stage) gameGrid.getScene().getWindow();
 
-            // Set the window icon
             MemoryGameApp.setWindowIcon(stage);
 
             stage.setScene(scene);
-            stage.setTitle("Memory Game - Main Menu");
 
             if (originalWidth > 0 && originalHeight > 0) {
                 stage.setWidth(originalWidth);
@@ -345,13 +373,22 @@ public class GameScreenController {
         }
     }
 
-    // Overloaded method for ActionEvent (when called from FXML button)
+    /**
+     * Returns to the main menu (via ActionEvent).
+     *
+     * @param event The ActionEvent.
+     */
     @FXML
     private void backToMenu(ActionEvent event) {
         backToMenu();
     }
 
-    // Helper method to show error alerts
+    /**
+     * Shows an error dialog.
+     *
+     * @param title Title of the dialog.
+     * @param message Error message.
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -360,3 +397,4 @@ public class GameScreenController {
         alert.showAndWait();
     }
 }
+
